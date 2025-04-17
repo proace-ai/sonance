@@ -40,12 +40,7 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
       {/* Header with vinyl animation */}
       <div className="relative overflow-hidden h-72 bg-gradient-to-r from-indigo-900 to-blue-800">
         <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute inset-x-0 top-0 h-full flex items-center justify-center">
-            <div className="w-96 h-96 rounded-full border-[20px] border-white/20 animate-spin-slow" style={{ animationDuration: '10s' }}></div>
-            <div className="w-60 h-60 rounded-full border-[10px] border-white/30 absolute animate-spin-slow" style={{ animationDuration: '20s', animationDirection: 'reverse' }}></div>
-            <div className="w-32 h-32 rounded-full bg-white/10 absolute"></div>
-            <div className="w-4 h-4 rounded-full bg-white/60 absolute"></div>
-          </div>
+          {/* Removed responsive UI elements */}
         </div>
         
         <div className="absolute top-0 left-0 p-6">
@@ -173,7 +168,7 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
                 </div>
                 <div className="mt-3">
                   <h3 className="font-medium text-sm mb-1 truncate text-gray-800">{album.title}</h3>
-                  <p className="text-xs text-gray-600 truncate">{album.year} • {album.songCount} songs</p>
+                  <p className="text-xs text-gray-600 truncate">2023 • 12 songs</p>
                 </div>
               </div>
             ))}
@@ -204,9 +199,9 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium mb-1 truncate text-gray-800">{album.title}</h3>
-                  <p className="text-sm text-gray-600 truncate">{album.artist} • {album.songCount} songs</p>
+                  <p className="text-sm text-gray-600 truncate">Artist Name • 12 songs</p>
                 </div>
-                <div className="text-sm text-gray-600 mr-4">{album.year}</div>
+                <div className="text-sm text-gray-600 mr-4">2023</div>
                 <button className="text-neutral-400 hover:text-neutral-700 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />

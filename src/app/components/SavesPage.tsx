@@ -48,13 +48,7 @@ const SavesPage: React.FC<SavesPageProps> = ({ onClose, onSongSelect }) => {
       {/* Header */}
       <div className="relative overflow-hidden h-60 bg-gradient-to-r from-amber-500 to-yellow-400">
         <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute inset-0 grid grid-cols-10 grid-rows-6 gap-2">
-            {Array(60).fill(0).map((_, i) => (
-              <div key={i} className="bg-white rounded-sm opacity-60" style={{
-                transform: `rotate(${Math.random() * 45}deg)`
-              }}></div>
-            ))}
-          </div>
+          {/* Removed responsive UI elements */}
         </div>
         
         <div className="absolute top-0 left-0 p-6">

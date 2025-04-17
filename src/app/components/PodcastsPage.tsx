@@ -75,10 +75,10 @@ const generateEpisodes = () => {
   return songs.slice(0, 10).map((song, idx) => ({
     id: idx + 1,
     title: `${song.title} - Discussion`,
-    duration: `${Math.floor(Math.random() * 40) + 20}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
-    date: `${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2023`,
+    duration: `${25 + idx}:30`,
+    date: `${15}/${Math.ceil((idx + 1) / 2)}/2023`,
     description: `In this episode, we explore the making of "${song.title}" by ${song.artist} and its impact on the music industry.`,
-    listened: Math.random() > 0.7
+    listened: idx < 3 // First 3 episodes are listened to
   }));
 };
 
@@ -102,23 +102,7 @@ const PodcastsPage: React.FC<PodcastsPageProps> = ({ onClose }) => {
       {/* Header */}
       <div className="relative overflow-hidden h-72 bg-gradient-to-r from-purple-900 to-violet-700">
         <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute inset-0">
-            {Array(8).fill(0).map((_, i) => (
-              <div 
-                key={i} 
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${Math.random() * 300 + 50}px`,
-                  height: `${Math.random() * 300 + 50}px`,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  opacity: Math.random() * 0.4,
-                  transform: `scale(${Math.random() * 0.5 + 0.5})`,
-                  animation: `pulse ${Math.random() * 4 + 3}s infinite alternate`
-                }}
-              ></div>
-            ))}
-          </div>
+          {/* Removed responsive UI elements */}
         </div>
         
         <div className="absolute top-0 left-0 p-6">
@@ -423,7 +407,7 @@ const PodcastsPage: React.FC<PodcastsPageProps> = ({ onClose }) => {
                           <p className="text-xs text-neutral-500 line-clamp-1">
                             {item.podcast.title} • {item.podcast.host}
                           </p>
-                          <div className="flex items-center text-xs text-neutral-400 mt-1">
+                          <div className="flex items-center text-xs text-neutral-400 mt-1" key={`episode-meta-${item.podcast.id}-${idx}`}>
                             <span>{item.date}</span>
                             <span className="mx-1">•</span>
                             <span>{item.duration}</span>

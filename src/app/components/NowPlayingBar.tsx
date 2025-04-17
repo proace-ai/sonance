@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import type { Song } from '../data/songs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { slideUpVariants } from '../utils/transitions';

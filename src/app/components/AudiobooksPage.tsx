@@ -107,18 +107,7 @@ const AudiobooksPage: React.FC<AudiobooksPageProps> = ({ onClose }) => {
       {/* Header */}
       <div className="relative overflow-hidden h-72 bg-gradient-to-r from-cyan-800 to-teal-600">
         <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute inset-0 flex items-center justify-around">
-            {Array(7).fill(0).map((_, i) => (
-              <div 
-                key={i} 
-                className="h-full w-1 bg-white transform rotate-12"
-                style={{
-                  opacity: 0.1 + (i * 0.1),
-                  marginLeft: `${i * 50}px`
-                }}
-              ></div>
-            ))}
-          </div>
+          {/* Removed responsive UI elements */}
         </div>
         
         <div className="absolute top-0 left-0 p-6">

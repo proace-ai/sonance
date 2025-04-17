@@ -371,7 +371,7 @@ export default function Home() {
                 />
               </div>
               <h3 className="font-medium text-sm mb-1 truncate text-gray-800">{song.title}</h3>
-              <p className="text-xs text-gray-600 truncate">{song.artist}</p>
+              <p className="text-xs text-gray-600 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
             </div>
           </div>
         ))}
@@ -404,7 +404,7 @@ export default function Home() {
                     />
                   </div>
                   <h3 className="font-medium text-sm mb-1 truncate text-gray-800">{song.title}</h3>
-                  <p className="text-xs text-gray-600 truncate">{song.artist}</p>
+                  <p className="text-xs text-gray-600 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
                 </div>
               </div>
             );
@@ -1023,7 +1023,7 @@ export default function Home() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <h3 className="font-medium mb-0.5 sm:mb-1 text-sm sm:text-base truncate text-gray-800">{song.title}</h3>
-                            <p className="text-xs sm:text-sm text-neutral-500 truncate">{song.artist}</p>
+                            <p className="text-xs sm:text-sm text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
                           </div>
                           <div className="text-xs sm:text-sm text-neutral-500 mr-2 sm:mr-4">{song.duration}</div>
                           <button
@@ -1071,7 +1071,7 @@ export default function Home() {
                               <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
                             </div>
                             <h3 className="font-medium text-xs sm:text-sm mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
-                            <p className="text-xs text-neutral-500 truncate">{song.artist}</p>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
                           </div>
                         ))}
                       </div>
@@ -1156,7 +1156,7 @@ export default function Home() {
                               <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
                             </div>
                             <h3 className="font-medium text-xs sm:text-sm mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
-                            <p className="text-xs text-neutral-500 truncate">{song.artist}</p>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
                           </div>
                         ))}
                       </div>

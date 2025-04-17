@@ -81,7 +81,7 @@ export default function SongList({ songs, currentSongIndex, onSongSelect }: Song
                 }`}>
                   {song.title}
                 </p>
-                <p className="text-xs text-gray-600 truncate">
+                <p className="text-xs text-gray-600 truncate" key={`artist-${song.id}`}>
                   {song.artist}
                 </p>
               </div>

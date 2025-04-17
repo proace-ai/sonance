@@ -187,7 +187,7 @@ function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps
                         {song.album || song.artist + " - Album"}
                       </div>
                       <div className="col-span-2 text-sm text-gray-500">
-                        {Math.floor(Math.random() * 4) + 1} days ago
+                        3 days ago
                       </div>
                       <div className="col-span-1 flex items-center justify-center text-gray-500">
                         {song.duration}
@@ -217,7 +217,7 @@ function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps
                       ))}
                     </div>
                     <p className="text-sm text-gray-500">
-                      Followed by {Math.floor(Math.random() * 5) + 3} of your friends
+                      Followed by 4 of your friends
                     </p>
                   </div>
                 </div>
