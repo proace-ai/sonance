@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Song } from '../data/songs';
 import { formatTime } from '../utils/formatTime';
 import { motion } from 'framer-motion';
-import { VolumeControl } from './VolumeControl';
 import Image from 'next/image';
+import { VolumeControl } from './VolumeControl';
 
 interface ExpandedSongCardProps {
   song: Song;
@@ -13,12 +13,10 @@ interface ExpandedSongCardProps {
   progress: number;
   duration: number;
   suggestedSongs: Song[];
-  volume: number;
   onPlayPause: () => void;
   onNext: () => void;
   onPrevious: () => void;
   onProgressChange: (time: number) => void;
-  onVolumeChange: (volume: number) => void;
   onClose: () => void;
   onSelectSong: (songId: number) => void;
   onShuffleToggle: (isShuffleOn: boolean) => void;
@@ -34,12 +32,10 @@ export default function ExpandedSongCard({
   progress,
   duration,
   suggestedSongs,
-  volume,
   onPlayPause,
   onNext,
   onPrevious,
   onProgressChange,
-  onVolumeChange,
   onClose,
   onSelectSong,
   onShuffleToggle,
@@ -121,17 +117,6 @@ export default function ExpandedSongCard({
       document.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
-
-  const handleVolumeChange = (newVolume: number) => {
-    // Ensure the volume is within valid range
-    const safeVolume = Math.max(0, Math.min(1, newVolume));
-    
-    // Only update if there's an actual change to avoid unnecessary re-renders
-    // and potential playback disruption
-    if (safeVolume !== volume) {
-      onVolumeChange(safeVolume);
-    }
-  };
 
   const handleShuffleToggle = () => {
     onShuffleToggle(!isShuffleOn);
@@ -337,22 +322,14 @@ export default function ExpandedSongCard({
                 )}
               </button>
               
-              <div className="flex items-center">
-                <VolumeControl 
-                  volume={volume} 
-                  onChange={handleVolumeChange}
-                  className="ml-1 text-white/80 hover:text-white"
-                />
+              {/* Volume Control - Visual Only */}
+              <div onClick={(e) => e.stopPropagation()}>
+                <VolumeControl className="text-white/70 hover:text-white" />
               </div>
               
-              <button 
-                onClick={() => setShowPlaylistMenu(!showPlaylistMenu)}
-                id="playlist-container"
-                className="p-2 text-white/70 hover:text-white transition-colors rounded-full"
-                aria-label="Add to playlist"
-              >
+              <button className="p-1.5 text-white/70 hover:text-white transition-colors rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
                 </svg>
               </button>
             </div>

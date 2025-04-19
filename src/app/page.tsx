@@ -1174,12 +1174,10 @@ export default function Home() {
               isPlaying={isPlaying}
               progress={progress}
               duration={duration}
-              volume={volume}
               onPlayPause={handlePlayPause}
               onNext={nextSong}
               onPrevious={previousSong}
               onProgressChange={handleProgressChange}
-              onVolumeChange={handleVolumeChange}
               onExpand={handleExpandCard}
             />
           </div>
@@ -1193,7 +1191,6 @@ export default function Home() {
           isPlaying={isPlaying}
           progress={progress}
           duration={duration}
-          volume={volume}
           progressPercentage={
             isFinite(progress) && isFinite(duration) && duration > 0
               ? Math.max(0, Math.min(100, (progress / duration) * 100))
@@ -1204,7 +1201,6 @@ export default function Home() {
           onNext={nextSong}
           onPrevious={previousSong}
           onProgressChange={handleProgressChange}
-          onVolumeChange={handleVolumeChange}
           onClose={handleCloseExpandedCard}
           onSelectSong={handleSongSelect}
           onShuffleToggle={handleShuffleToggle}
