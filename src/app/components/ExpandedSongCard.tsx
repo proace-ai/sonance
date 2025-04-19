@@ -46,7 +46,7 @@ export default function ExpandedSongCard({
 }: ExpandedSongCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
+  // const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const progressContainerRef = useRef<HTMLDivElement>(null);

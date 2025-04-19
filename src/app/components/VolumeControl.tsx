@@ -10,7 +10,7 @@ export const VolumeControl: React.FC<VolumeControlProps> = ({
   className = ""
 }) => {
   // State for mobile detection and UI interaction
-  const [isMobile, setIsMobile] = useState(false);
+  const [/* isMobile */, setIsMobile] = useState(false);
   const [isSliderVisible, setIsSliderVisible] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(50); // UI-only slider position
   const [isDragging, setIsDragging] = useState(false);
@@ -54,7 +54,7 @@ export const VolumeControl: React.FC<VolumeControlProps> = ({
       const trackTop = sliderTrack.top;
       
       // Calculate percentage (inverted for bottom-up slider)
-      let percentage = 100 - Math.max(0, Math.min(100, 
+      const percentage = 100 - Math.max(0, Math.min(100, 
         ((clientY - trackTop) / trackHeight) * 100
       ));
       

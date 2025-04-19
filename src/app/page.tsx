@@ -83,14 +83,14 @@ export default function Home() {
     setIsPlaying,
     progress,
     duration,
-    volume,
+    /* volume, */
     recentlyPlayed,
     addToRecentlyPlayed,
     handlePlayPause,
     handleNext: nextSong,
     handlePrevious: previousSong,
     handleProgressChange,
-    handleVolumeChange,
+    /* handleVolumeChange, */
     handleSongSelect,
     currentSong
   } = useMusicPlayer(songs, audioRef);
