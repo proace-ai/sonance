@@ -92,7 +92,9 @@ export default function ExpandedSongCard({
 
   const handleProgressTouch = (e: React.TouchEvent<HTMLDivElement>) => {
     if (progressContainerRef.current && isFinite(duration) && duration > 0) {
-      setIsDragging(true);
+      // Prevent default to avoid page scrolling while interacting with slider
+      e.preventDefault();
+      
       const rect = progressContainerRef.current.getBoundingClientRect();
       const touch = e.touches[0];
       const position = touch.clientX - rect.left;
@@ -113,10 +115,39 @@ export default function ExpandedSongCard({
     };
     
     document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchcancel', handleTouchEnd);
+    
     return () => {
       document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, []);
+
+  // Handle touch move on document level for smoother dragging
+  useEffect(() => {
+    if (!isDragging) return;
+    
+    const handleDocumentTouchMove = (e: TouchEvent) => {
+      if (progressContainerRef.current && isFinite(duration) && duration > 0) {
+        const rect = progressContainerRef.current.getBoundingClientRect();
+        const touch = e.touches[0];
+        const position = touch.clientX - rect.left;
+        // Ensure percentage is within valid range (0-1)
+        const percentage = Math.max(0, Math.min(1, position / rect.width));
+        const newTime = percentage * duration;
+        // Make sure we're passing a valid, finite number
+        if (isFinite(newTime) && newTime >= 0) {
+          onProgressChange(newTime);
+        }
+      }
+    };
+    
+    document.addEventListener('touchmove', handleDocumentTouchMove, { passive: false });
+    
+    return () => {
+      document.removeEventListener('touchmove', handleDocumentTouchMove);
+    };
+  }, [isDragging, duration, onProgressChange]);
 
   const handleShuffleToggle = () => {
     onShuffleToggle(!isShuffleOn);
@@ -203,22 +234,30 @@ export default function ExpandedSongCard({
             </div>
             
             <div 
-              className="w-full h-1.5 bg-gray-700/50 rounded-full overflow-hidden relative cursor-pointer touch-manipulation"
+              className="w-full h-1.5 bg-gray-700/50 rounded-full overflow-hidden relative cursor-pointer touch-manipulation mobile-progress-bar"
               ref={progressContainerRef}
               onClick={handleProgressClick}
-              onTouchStart={handleProgressTouch}
+              onTouchStart={(e) => {
+                setIsDragging(true);
+                handleProgressTouch(e);
+              }}
               onTouchMove={handleProgressTouch}
+              onTouchEnd={() => setIsDragging(false)}
             >
               <div 
                 className="h-full bg-white rounded-full"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
               <div 
-                className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"
+                className="absolute top-1/2 bg-white rounded-full shadow-md"
                 style={{ 
                   left: progressThumbPosition, 
-                  opacity: isDragging ? 1 : 0,
-                  transition: 'opacity 0.2s ease'
+                  opacity: isDragging ? 1 : 0.7,
+                  transition: isDragging ? 'none' : 'opacity 0.2s ease',
+                  width: isDragging ? '16px' : '12px',
+                  height: isDragging ? '16px' : '12px',
+                  transform: `translate(-50%, -50%) scale(${isDragging ? 1.2 : 1})`,
+                  boxShadow: isDragging ? '0 0 8px rgba(255, 255, 255, 0.6)' : '0 0 4px rgba(255, 255, 255, 0.3)'
                 }}
               ></div>
             </div>
@@ -432,6 +471,26 @@ export default function ExpandedSongCard({
         @media (hover: hover) {
           .progress-container:hover .progress-thumb {
             opacity: 1 !important;
+          }
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+          /* Make slider easier to interact with on mobile */
+          .mobile-progress-bar {
+            height: 10px !important; 
+            margin: 8px 0;
+          }
+          
+          /* Add extra touch area for slider */
+          .mobile-progress-bar::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            bottom: -10px;
+            z-index: -1;
           }
         }
       `}</style>

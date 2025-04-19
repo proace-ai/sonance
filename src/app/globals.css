@@ -171,4 +171,21 @@ body {
     width: 18px;
     height: 18px;
   }
+  
+  /* Mobile header improvements */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: rgba(249, 250, 251, 0.95);
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Improve touch targets in header specifically */
+  header button, 
+  header [role="button"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
