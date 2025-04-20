@@ -30,6 +30,34 @@ const playlists = {
     creator: "Sonance",
     followers: "1.5M",
     songIds: [3, 6, 9, 12, 15, 18, 21, 24, 27, 30]
+  },
+  "Workout Mix": {
+    description: "High-energy tracks to power up your fitness routine.",
+    color: "from-red-400 to-orange-500",
+    creator: "Sonance",
+    followers: "1.2M",
+    songIds: [2, 3, 5, 7, 13, 15, 25, 27, 29]
+  },
+  "Indie Discoveries": {
+    description: "Fresh sounds from emerging independent artists.",
+    color: "from-emerald-400 to-teal-600",
+    creator: "Sonance",
+    followers: "957K",
+    songIds: [4, 9, 12, 16, 19, 21, 24, 27, 28, 32]
+  },
+  "Throwback Classics": {
+    description: "Nostalgic hits that stand the test of time.",
+    color: "from-violet-500 to-purple-700",
+    creator: "Sonance",
+    followers: "2.1M",
+    songIds: [1, 5, 17, 20, 25, 26, 29, 30]
+  },
+  "Focus Flow": {
+    description: "Calm, ambient tracks to help you concentrate and stay productive.",
+    color: "from-indigo-400 to-blue-600",
+    creator: "Sonance",
+    followers: "1.7M",
+    songIds: [6, 9, 11, 14, 18, 21, 22, 31, 32]
   }
 };
 

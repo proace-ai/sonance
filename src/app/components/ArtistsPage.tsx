@@ -285,37 +285,29 @@ const ArtistsPage: React.FC<ArtistsPageProps> = ({ onClose, onSongSelect }) => {
           </div>
         </>
       ) : (
-        /* Artists List View */
         <>
-          {/* Header */}
-          <div className="relative overflow-hidden h-72 bg-gradient-to-r from-rose-800 to-orange-700">
-            <div className="absolute inset-0 overflow-hidden opacity-20">
-              {/* Removed responsive UI elements */}
-            </div>
-            
-            <div className="absolute top-0 left-0 p-6">
+          {/* Header with gradient */}
+          <div className="bg-gradient-to-b from-rose-900 to-rose-700 h-48 sm:h-64 flex items-end">
+            <div className="p-6 sm:p-8 text-white">
               <button 
                 onClick={onClose}
-                className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+                className="mb-3 sm:mb-4 p-2 bg-black/20 hover:bg-black/30 rounded-full text-white transition-colors"
                 aria-label="Go back"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
               </button>
-            </div>
-            
-            <div className="absolute bottom-0 left-0 p-8 flex items-end">
-              <div className="mr-6 bg-rose-700 rounded-xl p-4 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
-                  <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-white text-sm font-medium mb-1">BROWSE</div>
-                <h1 className="text-white text-5xl font-bold mb-3">Artists</h1>
-                <div className="flex items-center text-white/80 text-sm">
-                  <span className="font-medium">{artists.length} popular artists</span>
+              <div className="flex items-center">
+                <div className="hidden sm:block mr-6 bg-rose-800 rounded-xl p-4 shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
+                    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">COLLECTION</div>
+                  <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Artists</h1>
+                  <div className="text-xs sm:text-sm opacity-90">{artists.length} artists</div>
                 </div>
               </div>
             </div>

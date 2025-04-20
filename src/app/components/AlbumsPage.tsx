@@ -37,37 +37,28 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
 
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
-      {/* Header with vinyl animation */}
-      <div className="relative overflow-hidden h-72 bg-gradient-to-r from-indigo-900 to-blue-800">
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          {/* Removed responsive UI elements */}
-        </div>
-        
-        <div className="absolute top-0 left-0 p-6">
+      {/* Header with gradient */}
+      <div className="bg-gradient-to-b from-indigo-900 to-blue-800 h-48 sm:h-64 flex items-end">
+        <div className="p-6 sm:p-8 text-white">
           <button 
             onClick={onClose}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+            className="mb-3 sm:mb-4 p-2 bg-black/20 hover:bg-black/30 rounded-full text-white transition-colors"
             aria-label="Go back"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </button>
-        </div>
-        
-        <div className="absolute bottom-0 left-0 p-8 flex items-end">
-          <div className="mr-6 bg-indigo-800 rounded-xl p-4 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
-              <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 8.625a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM12 18.75a6.75 6.75 0 110-13.5 6.75 6.75 0 010 13.5z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-white text-sm font-medium mb-1">COLLECTION</div>
-            <h1 className="text-white text-5xl font-bold mb-3">Albums</h1>
-            <div className="flex items-center text-white/80 text-sm">
-              <span className="font-medium">Library</span>
-              <span className="mx-1">•</span>
-              <span>{albums.length} albums</span>
+          <div className="flex items-center">
+            <div className="hidden sm:block mr-6 bg-indigo-800 rounded-xl p-4 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
+                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 8.625a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM12 18.75a6.75 6.75 0 110-13.5 6.75 6.75 0 010 13.5z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">COLLECTION</div>
+              <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Albums</h1>
+              <div className="text-xs sm:text-sm opacity-90">{albums.length} albums</div>
             </div>
           </div>
         </div>

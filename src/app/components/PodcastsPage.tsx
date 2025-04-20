@@ -99,38 +99,29 @@ const PodcastsPage: React.FC<PodcastsPageProps> = ({ onClose }) => {
 
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
-      {/* Header */}
-      <div className="relative overflow-hidden h-72 bg-gradient-to-r from-purple-900 to-violet-700">
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          {/* Removed responsive UI elements */}
-        </div>
-        
-        <div className="absolute top-0 left-0 p-6">
+      {/* Header with gradient */}
+      <div className="bg-gradient-to-b from-purple-900 to-violet-700 h-48 sm:h-64 flex items-end">
+        <div className="p-6 sm:p-8 text-white">
           <button 
             onClick={onClose}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+            className="mb-3 sm:mb-4 p-2 bg-black/20 hover:bg-black/30 rounded-full text-white transition-colors"
             aria-label="Go back"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </button>
-        </div>
-        
-        <div className="absolute bottom-0 left-0 p-8 flex items-end">
-          <div className="mr-6 bg-purple-800 rounded-xl p-4 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
-              <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
-              <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-white text-sm font-medium mb-1">EXPLORE</div>
-            <h1 className="text-white text-5xl font-bold mb-3">Podcasts</h1>
-            <div className="flex items-center text-white/80 text-sm">
-              <span className="font-medium">Available shows</span>
-              <span className="mx-1">•</span>
-              <span>{podcasts.length} podcasts</span>
+          <div className="flex items-center">
+            <div className="hidden sm:block mr-6 bg-purple-800 rounded-xl p-4 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
+                <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+                <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">EXPLORE</div>
+              <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Podcasts</h1>
+              <div className="text-xs sm:text-sm opacity-90">{podcasts.length} podcasts</div>
             </div>
           </div>
         </div>
@@ -285,7 +276,7 @@ const PodcastsPage: React.FC<PodcastsPageProps> = ({ onClose }) => {
             {selectedTab === 'shows' && (
               <>
                 {/* Category filters */}
-                <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex items-center gap-3 mb-8 flexscroll">
                   <button 
                     className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap ${
                       selectedCategory === null 

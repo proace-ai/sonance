@@ -355,9 +355,43 @@ export default function Home() {
   // Memoize the sections to prevent unnecessary re-renders
   const renderNewReleases = useCallback(() => (
     <section className="mb-8">
-      <h2 className="text-xl font-semibold mb-5 text-gray-800">New Releases</h2>
-      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-        {songs.slice(0, 6).map((song) => (
+      <div className="flex justify-between items-center mb-4 md:mb-5">
+        <h2 className="text-xl font-semibold text-gray-800">New Releases</h2>
+        <div className="flex items-center gap-2">
+          <button
+            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+            aria-label="Scroll left"
+            onClick={(e) => {
+              e.preventDefault();
+              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+              if (container) {
+                container.scrollBy({ left: -300, behavior: 'smooth' });
+              }
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+            aria-label="Scroll right"
+            onClick={(e) => {
+              e.preventDefault();
+              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+              if (container) {
+                container.scrollBy({ left: 300, behavior: 'smooth' });
+              }
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+        {songs.slice(0, 12).map((song) => (
           <div key={song.id} className="flex-shrink-0 w-[170px]" onClick={() => handleSongClick(song.id - 1)}>
             <div className="rounded-xl overflow-hidden bg-gray-50 p-3 shadow-sm hover:shadow-md transition-all cursor-pointer hover-card-animation">
               <div className="w-full aspect-square rounded-lg overflow-hidden mb-3">
@@ -386,8 +420,42 @@ export default function Home() {
 
     return (
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-5 text-gray-800">Recently Played</h2>
-        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex justify-between items-center mb-4 md:mb-5">
+          <h2 className="text-xl font-semibold text-gray-800">Recently Played</h2>
+          <div className="flex items-center gap-2">
+            <button
+              className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+              aria-label="Scroll left"
+              onClick={(e) => {
+                e.preventDefault();
+                const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                if (container) {
+                  container.scrollBy({ left: -300, behavior: 'smooth' });
+                }
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <button
+              className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+              aria-label="Scroll right"
+              onClick={(e) => {
+                e.preventDefault();
+                const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                if (container) {
+                  container.scrollBy({ left: 300, behavior: 'smooth' });
+                }
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
           {recentlyPlayed.map((songIndex) => {
             const song = songs[songIndex];
             return (
@@ -902,10 +970,44 @@ export default function Home() {
 
                 {/* Featured playlists section */}
                 <section className="mb-8">
-                  <h2 className="text-xl font-semibold mb-5 text-gray-800">Featured Playlists</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+                  <div className="flex justify-between items-center mb-4 md:mb-5">
+                    <h2 className="text-xl font-semibold text-gray-800">Featured Playlists</h2>
+                    <div className="flex items-center gap-2">
+                      <button
+                        className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                        aria-label="Scroll left"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                          if (container) {
+                            container.scrollBy({ left: -300, behavior: 'smooth' });
+                          }
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                      </button>
+                      <button
+                        className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                        aria-label="Scroll right"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                          if (container) {
+                            container.scrollBy({ left: 300, behavior: 'smooth' });
+                          }
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
                     <div
-                      className="bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Top Hits 2024");
@@ -916,7 +1018,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">The hottest tracks right now</p>
                     </div>
                     <div
-                      className="bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Chill Vibes");
@@ -924,18 +1026,51 @@ export default function Home() {
                     >
                       <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-blue-400 to-teal-500"></div>
                       <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Chill Vibes</h3>
-                      <p className="text-xs text-gray-600 truncate">Relaxing tunes to unwind</p>
+                      <p className="text-xs text-gray-600 truncate">Relax and unwind</p>
                     </div>
                     <div
-                      className="bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
-                        handlePlaylistClick("Party Mix");
+                        handlePlaylistClick("Workout Mix");
                       }}
                     >
-                      <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-amber-400 to-red-500"></div>
-                      <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Party Mix</h3>
-                      <p className="text-xs text-gray-600 truncate">Upbeat tracks for your party</p>
+                      <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-red-400 to-orange-500"></div>
+                      <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Workout Mix</h3>
+                      <p className="text-xs text-gray-600 truncate">Energy boost for your session</p>
+                    </div>
+                    <div
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePlaylistClick("Indie Discoveries");
+                      }}
+                    >
+                      <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-emerald-400 to-lime-500"></div>
+                      <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Indie Discoveries</h3>
+                      <p className="text-xs text-gray-600 truncate">Fresh indie gems</p>
+                    </div>
+                    <div
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePlaylistClick("Throwback Classics");
+                      }}
+                    >
+                      <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-amber-400 to-yellow-500"></div>
+                      <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Throwback Classics</h3>
+                      <p className="text-xs text-gray-600 truncate">Hits from the past</p>
+                    </div>
+                    <div
+                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePlaylistClick("Focus Flow");
+                      }}
+                    >
+                      <div className="w-full aspect-square rounded-xl overflow-hidden mb-3 shadow-sm bg-gradient-to-br from-violet-400 to-purple-500"></div>
+                      <h3 className="font-medium text-sm mb-1 truncate text-gray-800">Focus Flow</h3>
+                      <p className="text-xs text-gray-600 truncate">Concentration enhancers</p>
                     </div>
                   </div>
                 </section>
@@ -1045,26 +1180,44 @@ export default function Home() {
                     <section>
                       <div className="flex justify-between items-center mb-4 md:mb-5">
                         <h2 className="text-xl font-semibold text-gray-800">Recommended for you</h2>
-                        <button
-                          className="text-neutral-700 hover:text-neutral-900 transition-colors"
-                          aria-label="View all recommendations"
-                        >
-                          <span className="hidden md:inline-flex items-center text-sm font-medium">
-                            View All
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 ml-1" aria-hidden="true">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                             </svg>
-                          </span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 md:hidden" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                          </svg>
-                        </button>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-5">
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
                         {songs.slice(8, 20).map((song) => (
                           <div
                             key={song.id}
-                            className="bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1081,25 +1234,40 @@ export default function Home() {
                     <section>
                       <div className="flex justify-between items-center mb-4 md:mb-5">
                         <h2 className="text-xl font-semibold text-gray-800">Explore Genres</h2>
-                        <button
-                          className="text-neutral-700 hover:text-neutral-900 transition-colors"
-                          aria-label="View all genres"
-                          onClick={(e) => {
-                            e.preventDefault();
-                          }}
-                        >
-                          <span className="hidden md:inline-flex items-center text-sm font-medium">
-                            View All
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 ml-1" aria-hidden="true">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                             </svg>
-                          </span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 md:hidden" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                          </svg>
-                        </button>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-5">
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
                         {[
                           { name: "Pop", color: "bg-gradient-to-br from-pink-400 to-red-500", songs: songs.filter(s => ["Katy Perry", "Taylor Swift", "Lady Gaga & Bruno Mars", "Harry Styles"].includes(s.artist)) },
                           { name: "Rock", color: "bg-gradient-to-br from-red-400 to-amber-500", songs: songs.filter(s => ["Bastille", "KALEO", "OneRepublic"].includes(s.artist)) },
@@ -1110,7 +1278,7 @@ export default function Home() {
                         ].map((genre, index) => (
                           <div
                             key={index}
-                            className="bg-gray-50 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative h-24 sm:h-36 group"
+                            className="flex-shrink-0 w-[200px] sm:w-[220px] bg-gray-50 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative h-24 sm:h-36 group"
                             onClick={(e) => {
                               e.preventDefault();
                               handleGenreClick(genre.name);
@@ -1130,26 +1298,263 @@ export default function Home() {
                     <section>
                       <div className="flex justify-between items-center mb-4 md:mb-5">
                         <h2 className="text-xl font-semibold text-gray-800">Recently Added</h2>
-                        <button
-                          className="text-neutral-700 hover:text-neutral-900 transition-colors"
-                          aria-label="View all recently added"
-                        >
-                          <span className="hidden md:inline-flex items-center text-sm font-medium">
-                            View All
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 ml-1" aria-hidden="true">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                             </svg>
-                          </span>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 md:hidden" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                          </svg>
-                        </button>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-5">
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
                         {songs.slice(20, 32).map((song) => (
                           <div
                             key={song.id}
-                            className="bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            onClick={() => handleSongClick(song.id - 1)}
+                          >
+                            <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
+                              <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
+                            </div>
+                            <h3 className="font-medium text-xs sm:text-sm mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+
+                    {/* Made for You */}
+                    <section>
+                      <div className="flex justify-between items-center mb-4 md:mb-5">
+                        <h2 className="text-xl font-semibold text-gray-800">Made for You</h2>
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+                        {songs.slice(12, 24).map((song) => (
+                          <div
+                            key={`daily-${song.id}`}
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            onClick={() => handleSongClick(song.id - 1)}
+                          >
+                            <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
+                              <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
+                            </div>
+                            <h3 className="font-medium text-xs sm:text-sm mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+
+                    {/* Trending Songs */}
+                    <section>
+                      <div className="flex justify-between items-center mb-4 md:mb-5">
+                        <h2 className="text-xl font-semibold text-gray-800">Trending Songs</h2>
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+                        {songs.slice(5, 17).map((song) => (
+                          <div
+                            key={`trending-${song.id}`}
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            onClick={() => handleSongClick(song.id - 1)}
+                          >
+                            <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
+                              <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
+                            </div>
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="text-xs font-medium text-white bg-red-500 rounded-full px-1.5 py-0.5">Trending</span>
+                              <h3 className="font-medium text-xs sm:text-sm truncate text-gray-800">{song.title}</h3>
+                            </div>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+
+                    {/* Songs You Might Like */}
+                    <section>
+                      <div className="flex justify-between items-center mb-4 md:mb-5">
+                        <h2 className="text-xl font-semibold text-gray-800">Songs You Might Like</h2>
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+                        {songs.slice(14, 26).map((song) => (
+                          <div
+                            key={`suggest-${song.id}`}
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            onClick={() => handleSongClick(song.id - 1)}
+                          >
+                            <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
+                              <Image src={song.cover} alt={song.title} width={200} height={200} className="w-full h-full object-cover" loading="lazy" />
+                            </div>
+                            <h3 className="font-medium text-xs sm:text-sm mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
+                            <p className="text-xs text-neutral-500 truncate" key={`artist-display-${song.id}`}>{song.artist}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+
+                    {/* Based on Your Recent Listening */}
+                    <section>
+                      <div className="flex justify-between items-center mb-4 md:mb-5">
+                        <h2 className="text-xl font-semibold text-gray-800">Based on Your Recent Listening</h2>
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll left"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: -300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                          </button>
+                          <button
+                            className="p-2 rounded-full bg-gray-100 text-neutral-700 hover:bg-gray-200 transition-colors"
+                            aria-label="Scroll right"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const container = e.currentTarget.closest('section')?.querySelector('.scroll-container');
+                              if (container) {
+                                container.scrollBy({ left: 300, behavior: 'smooth' });
+                              }
+                            }}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+                        {songs.slice(18, 30).map((song) => (
+                          <div
+                            key={`recent-suggest-${song.id}`}
+                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">

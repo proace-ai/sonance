@@ -104,37 +104,28 @@ const AudiobooksPage: React.FC<AudiobooksPageProps> = ({ onClose }) => {
 
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
-      {/* Header */}
-      <div className="relative overflow-hidden h-72 bg-gradient-to-r from-cyan-800 to-teal-600">
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          {/* Removed responsive UI elements */}
-        </div>
-        
-        <div className="absolute top-0 left-0 p-6">
+      {/* Header with gradient */}
+      <div className="bg-gradient-to-b from-cyan-800 to-teal-600 h-48 sm:h-64 flex items-end">
+        <div className="p-6 sm:p-8 text-white">
           <button 
             onClick={onClose}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+            className="mb-3 sm:mb-4 p-2 bg-black/20 hover:bg-black/30 rounded-full text-white transition-colors"
             aria-label="Go back"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </button>
-        </div>
-        
-        <div className="absolute bottom-0 left-0 p-8 flex items-end">
-          <div className="mr-6 bg-teal-700 rounded-xl p-4 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
-              <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-white text-sm font-medium mb-1">LIBRARY</div>
-            <h1 className="text-white text-5xl font-bold mb-3">Audiobooks</h1>
-            <div className="flex items-center text-white/80 text-sm">
-              <span className="font-medium">{audiobooks.length} titles</span>
-              <span className="mx-1">•</span>
-              <span>{categories.length} categories</span>
+          <div className="flex items-center">
+            <div className="hidden sm:block mr-6 bg-teal-700 rounded-xl p-4 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
+                <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">LIBRARY</div>
+              <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Audiobooks</h1>
+              <div className="text-xs sm:text-sm opacity-90">{audiobooks.length} titles</div>
             </div>
           </div>
         </div>

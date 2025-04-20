@@ -135,6 +135,32 @@ body {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+/* Flexscroll - optimized horizontal scrolling for mobile */
+.flexscroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1.5rem;
+  padding: 0.5rem 0.125rem;
+  margin: 0 -0.125rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-x;
+  flex-wrap: nowrap;
+}
+
+.flexscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.flexscroll > * {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
 /* Card hover animation */
 .hover-card-animation {
   transition: transform 0.3s ease, box-shadow 0.3s ease;

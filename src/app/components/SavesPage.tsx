@@ -45,37 +45,28 @@ const SavesPage: React.FC<SavesPageProps> = ({ onClose, onSongSelect }) => {
 
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
-      {/* Header */}
-      <div className="relative overflow-hidden h-60 bg-gradient-to-r from-amber-500 to-yellow-400">
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          {/* Removed responsive UI elements */}
-        </div>
-        
-        <div className="absolute top-0 left-0 p-6">
+      {/* Header with gradient */}
+      <div className="bg-gradient-to-b from-amber-500 to-yellow-400 h-48 sm:h-64 flex items-end">
+        <div className="p-6 sm:p-8 text-white">
           <button 
             onClick={onClose}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+            className="mb-3 sm:mb-4 p-2 bg-black/20 hover:bg-black/30 rounded-full text-white transition-colors"
             aria-label="Go back"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </button>
-        </div>
-        
-        <div className="absolute bottom-0 left-0 p-8 flex items-end">
-          <div className="mr-6 bg-amber-600 rounded-xl p-4 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
-              <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-white text-sm font-medium mb-1">COLLECTION</div>
-            <h1 className="text-white text-5xl font-bold mb-3">Your Saves</h1>
-            <div className="flex items-center text-white/80 text-sm">
-              <span className="font-medium">You</span>
-              <span className="mx-1">•</span>
-              <span>{savedCategories.reduce((acc, cat) => acc + cat.items.length, 0)} items</span>
+          <div className="flex items-center">
+            <div className="hidden sm:block mr-6 bg-amber-600 rounded-xl p-4 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-14 h-14 text-white">
+                <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">COLLECTION</div>
+              <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Your Saves</h1>
+              <div className="text-xs sm:text-sm opacity-90">{savedCategories.reduce((acc, cat) => acc + cat.items.length, 0)} items</div>
             </div>
           </div>
         </div>
@@ -84,7 +75,7 @@ const SavesPage: React.FC<SavesPageProps> = ({ onClose, onSongSelect }) => {
       {/* Content */}
       <div className="p-6 bg-gradient-to-b from-amber-800/10 to-neutral-50/0">
         {/* Filter options */}
-        <div className="flex items-center gap-3 mb-8 flex-wrap">
+        <div className="flex items-center gap-3 mb-8 flexscroll">
           <button className="px-4 py-2 bg-amber-500 text-white rounded-full font-medium text-sm">
             All items
           </button>
