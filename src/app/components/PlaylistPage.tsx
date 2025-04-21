@@ -6,6 +6,7 @@ interface PlaylistPageProps {
   playlistName: string;
   onClose: () => void;
   onSongSelect: (songIndex: number) => void;
+  currentSongIndex?: number;
 }
 
 // Mock playlist data - in a real app, this would come from a database
@@ -61,7 +62,7 @@ const playlists = {
   }
 };
 
-function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps) {
+function PlaylistPage({ playlistName, onClose, onSongSelect, currentSongIndex = -1 }: PlaylistPageProps) {
   const [playlistSongs, setPlaylistSongs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const playlist = playlists[playlistName as keyof typeof playlists] || {
@@ -146,35 +147,36 @@ function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps
             </div>
           ) : (
             <>
-              <div className="flex items-center justify-between mb-8">
+              {/* Optimized controls section for mobile */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-8 gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Playlist Songs</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Playlist Songs</h2>
                 </div>
-                <div className="flex gap-3">
-                  <button className="px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-neutral-800 transition-colors flex items-center gap-2">
+                <div className="flex gap-2 sm:gap-3">
+                  <button className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 bg-black text-white rounded-full font-medium hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                       <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
                     </svg>
-                    Play All
+                    <span className="text-sm sm:text-base">Play All</span>
                   </button>
-                  <button className="px-6 py-3 border border-neutral-200 text-neutral-800 rounded-full font-medium hover:bg-gray-50 transition-colors flex items-center gap-2">
+                  <button className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 border border-neutral-200 text-neutral-800 rounded-full font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                     </svg>
-                    Share
+                    <span className="text-sm sm:text-base">Share</span>
                   </button>
-                  <button className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                     </svg>
                   </button>
                 </div>
               </div>
               
-              {/* Song list with additional information */}
+              {/* Mobile-optimized song list */}
               <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm mb-10">
-                {/* Table header */}
-                <div className="grid grid-cols-12 px-4 py-3 border-b border-gray-200 text-sm font-medium text-gray-500">
+                {/* Table header - hidden on mobile, visible on larger screens */}
+                <div className="hidden sm:grid grid-cols-12 px-4 py-3 border-b border-gray-200 text-sm font-medium text-gray-500">
                   <div className="col-span-1 flex items-center justify-center">#</div>
                   <div className="col-span-5">Title</div>
                   <div className="col-span-3">Album</div>
@@ -190,12 +192,15 @@ function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps
                   playlistSongs.map((song, index) => (
                     <div 
                       key={song.id}
-                      className="grid grid-cols-12 px-4 py-3 items-center hover:bg-gray-100 transition-colors cursor-pointer border-b border-gray-200 last:border-b-0"
+                      className={`px-3 sm:px-4 py-3.5 sm:py-3 flex sm:grid sm:grid-cols-12 items-center hover:bg-gray-100 transition-colors cursor-pointer border-b border-gray-200 last:border-b-0 ${currentSongIndex === song.id - 1 ? 'bg-gray-100' : ''}`}
                       onClick={() => onSongSelect(song.id - 1)}
                     >
-                      <div className="col-span-1 text-center text-gray-500">{index + 1}</div>
-                      <div className="col-span-5 flex items-center">
-                        <div className="w-10 h-10 rounded overflow-hidden mr-3 flex-shrink-0">
+                      {/* Index number - hidden on mobile */}
+                      <div className="hidden sm:flex col-span-1 justify-center text-gray-500">{index + 1}</div>
+                      
+                      {/* Song info - optimized for mobile */}
+                      <div className="flex items-center flex-1 min-w-0 sm:col-span-5">
+                        <div className="w-12 h-12 sm:w-10 sm:h-10 rounded overflow-hidden mr-3 flex-shrink-0">
                           <Image 
                             src={song.cover} 
                             alt={song.title} 
@@ -206,18 +211,24 @@ function PlaylistPage({ playlistName, onClose, onSongSelect }: PlaylistPageProps
                             loading="lazy" 
                           />
                         </div>
-                        <div>
-                          <p className="font-medium line-clamp-1 text-gray-800">{song.title}</p>
+                        <div className="min-w-0 mr-2">
+                          <p className="font-medium text-base sm:text-sm line-clamp-1 text-gray-800">{song.title}</p>
                           <p className="text-sm text-gray-500 line-clamp-1">{song.artist}</p>
                         </div>
                       </div>
-                      <div className="col-span-3 text-sm text-gray-600 line-clamp-1">
+                      
+                      {/* Album - hidden on mobile */}
+                      <div className="hidden sm:block col-span-3 text-sm text-gray-600 line-clamp-1">
                         {song.album || song.artist + " - Album"}
                       </div>
-                      <div className="col-span-2 text-sm text-gray-500">
+                      
+                      {/* Added date - hidden on mobile */}
+                      <div className="hidden sm:block col-span-2 text-sm text-gray-500">
                         3 days ago
                       </div>
-                      <div className="col-span-1 flex items-center justify-center text-gray-500">
+                      
+                      {/* Duration - shown for all screens */}
+                      <div className="ml-auto sm:col-span-1 flex items-center justify-center text-right text-gray-500 text-sm">
                         {song.duration}
                       </div>
                     </div>

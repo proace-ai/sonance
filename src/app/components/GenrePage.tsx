@@ -11,16 +11,16 @@ interface GenrePageProps {
 }
 
 const genreArtists = {
-  "Pop": ["Katy Perry", "Taylor Swift", "Lady Gaga & Bruno Mars", "Harry Styles"],
-  "Rock": ["Bastille", "KALEO", "OneRepublic"],
-  "Indie": ["Girl in Red", "Hollow Coves", "Lord Huron"],
-  "Electronic": ["Eiffel 65", "The Neighbourhood", "Cigarettes After Sex"],
-  "Acoustic": ["Vance Joy", "SYML", "Tom Rosenthal"],
-  "Alternative": ["New West", "The Rare Occasions", "Dr. Dog"]
+  "Pop": ["Katy Perry", "Taylor Swift", "Lady Gaga & Bruno Mars", "Harry Styles", "Rosa Linn"],
+  "Rock": ["Bastille", "KALEO", "OneRepublic", "The Strumbellas", "Keane"],
+  "Indie": ["Girl in Red", "Hollow Coves", "Lord Huron", "Mt. Joy", "New West"],
+  "Electronic": ["Eiffel 65", "The Neighbourhood", "Cigarettes After Sex", "Djo"],
+  "Acoustic": ["Vance Joy", "SYML", "Tom Rosenthal", "Patrick Watson", "Jacob Collier"],
+  "Alternative": ["The Rare Occasions", "Dr. Dog", "PUBLIC", "Autoheart", "Seatbelt"]
 };
 
 function GenrePage({ genreName, onClose, onSongSelect }: GenrePageProps) {
-  const [genreSongs, setGenreSongs] = useState([]);
+  const [genreSongs, setGenreSongs] = useState<typeof songs>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -69,55 +69,72 @@ function GenrePage({ genreName, onClose, onSongSelect }: GenrePageProps) {
           </div>
         </div>
         
-        <div className="max-w-screen-xl mx-auto">
+        <div className="max-w-screen-xl mx-auto px-1 sm:px-0">
           {isLoading ? (
             <div className="flex justify-center items-center h-40">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
             </div>
           ) : (
             <>
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5 sm:mb-6 gap-3 sm:gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">All Songs</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800">All Songs</h2>
                 </div>
-                <div className="flex gap-3">
-                  <button className="px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-neutral-800 transition-colors flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <div className="flex gap-2 sm:gap-3">
+                  <button 
+                    className="px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-black text-white rounded-full font-medium hover:bg-neutral-800 transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+                    onClick={() => {
+                      if (genreSongs.length > 0) {
+                        const firstSong = genreSongs[0];
+                        const globalIndex = songs.findIndex(s => s.id === firstSong.id);
+                        if (globalIndex !== -1) {
+                          onSongSelect(globalIndex);
+                        }
+                      }
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                       <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
                     </svg>
                     Play All
                   </button>
-                  <button className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <button className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                     </svg>
                   </button>
                 </div>
               </div>
               
-              <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+              <div className="bg-gray-50 rounded-lg sm:rounded-2xl overflow-hidden shadow-sm">
                 {genreSongs.length > 0 ? (
                   genreSongs.map((song, index) => (
                     <div 
                       key={song.id}
-                      className="flex items-center p-4 hover:bg-neutral-100 cursor-pointer transition-colors border-b border-neutral-100 last:border-b-0"
-                      onClick={() => onSongSelect(song.id - 1)}
+                      className="flex items-center p-3 sm:p-4 hover:bg-neutral-100 cursor-pointer transition-colors border-b border-neutral-100 last:border-b-0"
+                      onClick={() => {
+                        // Find the index of this song in the global songs array
+                        const globalIndex = songs.findIndex(s => s.id === song.id);
+                        if (globalIndex !== -1) {
+                          onSongSelect(globalIndex);
+                        }
+                      }}
                     >
-                      <div className="mr-5 text-neutral-400 w-5 text-center font-medium">{index + 1}</div>
-                      <div className="w-14 h-14 rounded-md overflow-hidden mr-4 flex-shrink-0">
+                      <div className="hidden sm:block mr-5 text-neutral-400 w-5 text-center font-medium">{index + 1}</div>
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-md overflow-hidden mr-3 sm:mr-4 flex-shrink-0">
                         <Image src={song.cover} alt={song.title} className="w-full h-full object-cover" width={56} height={56} loading="lazy" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium mb-1 truncate text-gray-800">{song.title}</h3>
-                        <p className="text-sm text-neutral-500 truncate">{song.artist}</p>
+                        <h3 className="font-medium text-sm sm:text-base mb-0.5 sm:mb-1 truncate text-gray-800">{song.title}</h3>
+                        <p className="text-xs sm:text-sm text-neutral-500 truncate">{song.artist}</p>
                       </div>
-                      <div className="text-sm text-neutral-500 mr-4">{song.duration}</div>
+                      <div className="text-xs sm:text-sm text-neutral-500 mx-2 sm:mr-4 hidden sm:block">{song.duration}</div>
                       <button 
-                        className="text-neutral-400 hover:text-neutral-700 transition-colors"
+                        className="text-neutral-400 hover:text-neutral-700 transition-colors ml-1 sm:ml-0"
                         aria-label={`Like ${song.title}`}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                         </svg>
                       </button>
@@ -130,9 +147,9 @@ function GenrePage({ genreName, onClose, onSongSelect }: GenrePageProps) {
                 )}
               </div>
               
-              <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">About {genreName}</h2>
-                <p className="text-neutral-600 leading-relaxed">
+              <div className="mt-6 sm:mt-8">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">About {genreName}</h2>
+                <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
                   {genreName === "Pop" && "Pop music is characterized by catchy melodies, repetitive structures, and accessibility to wide audiences. It often incorporates elements from other styles, making it diverse and evolving."}
                   {genreName === "Rock" && "Rock music centers around electric guitars, drums, and emotive vocals. From classic rock to alternative, it emphasizes energy, attitude, and often addresses social themes."}
                   {genreName === "Indie" && "Independent or 'indie' music emerged from artists outside the commercial mainstream. It values creative freedom, authenticity, and DIY ethics, spanning various genres with a distinctive approach."}
@@ -142,7 +159,7 @@ function GenrePage({ genreName, onClose, onSongSelect }: GenrePageProps) {
                 </p>
               </div>
               
-              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
+              <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pb-20 sm:pb-24">
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
                   <h3 className="text-lg font-bold mb-4 text-gray-800">Featured Artists</h3>
                   <div className="space-y-3">

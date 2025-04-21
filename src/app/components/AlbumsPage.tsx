@@ -67,15 +67,15 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
       {/* Content */}
       <div className="p-6 bg-gradient-to-b from-indigo-900/10 to-neutral-50/0">
         {/* Controls bar */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <button className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+          <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+            <button className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                 <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
               </svg>
             </button>
             
-            <div className="relative w-64">
+            <div className="relative flex-1 sm:flex-none sm:w-64">
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-neutral-400">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -90,7 +90,7 @@ const AlbumsPage: React.FC<AlbumsPageProps> = ({ onClose, onSongSelect }) => {
             </div>
           </div>
           
-          <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm p-1">
+          <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm p-1 self-end sm:self-auto">
             <button 
               className={`p-2 rounded-lg ${selectedView === 'grid' ? 'bg-indigo-100 text-indigo-600' : 'text-neutral-500 hover:text-neutral-700'} transition-colors`}
               onClick={() => setSelectedView('grid')}

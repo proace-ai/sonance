@@ -7,6 +7,7 @@ import NowPlayingBar from './components/NowPlayingBar';
 import ExpandedSongCard from './components/ExpandedSongCard';
 import GenrePage from './components/GenrePage';
 import PlaylistPage from './components/PlaylistPage';
+import PlaylistsPage from './components/PlaylistsPage';
 import LikedSongsPage from './components/LikedSongsPage';
 import SavesPage from './components/SavesPage';
 import AlbumsPage from './components/AlbumsPage';
@@ -107,6 +108,9 @@ export default function Home() {
   // Add state for selected playlist
   const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
 
+  // Add state for playlists page
+  const [showPlaylists, setShowPlaylists] = useState(false);
+
   // Add state for liked songs page
   const [showLikedSongs, setShowLikedSongs] = useState(false);
 
@@ -146,11 +150,6 @@ export default function Home() {
 
   // Create ref for the sidebar
   const sidebarRef = useRef<HTMLDivElement>(null);
-
-  // Toggle dropdown function
-  const toggleDropdown = useCallback((id: string) => {
-    setOpenDropdown(openDropdown === id ? null : id);
-  }, [openDropdown]);
 
   // Handle sidebar collapse
   const handleSidebarMouseLeave = useCallback(() => {
@@ -228,16 +227,17 @@ export default function Home() {
   }, [currentSong]);
 
   // Helper function to reset all page states except the specified ones
-  const resetOtherPages = useCallback((except: string[] = []) => {
-    console.log('Resetting pages, except:', except);
-    if (!except.includes('genre')) setSelectedGenre(null);
-    if (!except.includes('playlist')) setSelectedPlaylist(null);
-    if (!except.includes('likedSongs')) setShowLikedSongs(false);
-    if (!except.includes('saves')) setShowSaves(false);
-    if (!except.includes('albums')) setShowAlbums(false);
-    if (!except.includes('podcasts')) setShowPodcasts(false);
-    if (!except.includes('audiobooks')) setShowAudiobooks(false);
-    if (!except.includes('artists')) setShowArtists(false);
+  const resetOtherPages = useCallback((exceptions: string[] = []) => {
+    if (!exceptions.includes('genre')) setSelectedGenre(null);
+    if (!exceptions.includes('playlist')) setSelectedPlaylist(null);
+    if (!exceptions.includes('playlists')) setShowPlaylists(false);
+    if (!exceptions.includes('likedSongs')) setShowLikedSongs(false);
+    if (!exceptions.includes('saves')) setShowSaves(false);
+    if (!exceptions.includes('albums')) setShowAlbums(false);
+    if (!exceptions.includes('podcasts')) setShowPodcasts(false);
+    if (!exceptions.includes('audiobooks')) setShowAudiobooks(false);
+    if (!exceptions.includes('artists')) setShowArtists(false);
+    if (!exceptions.includes('expanded')) setShowExpandedCard(false);
   }, []);
 
   // Handle song selection with expanded view
@@ -268,6 +268,24 @@ export default function Home() {
   const handleClosePlaylistPage = useCallback(() => {
     setSelectedPlaylist(null);
   }, []);
+
+  // Handle playlists click
+  const handlePlaylistsClick = useCallback(() => {
+    setShowPlaylists(true);
+    resetOtherPages(['playlists']);
+  }, [resetOtherPages]);
+
+  // Handle closing playlists page
+  const handleClosePlaylistsPage = useCallback(() => {
+    setShowPlaylists(false);
+  }, []);
+
+  // Handle playlist selection from playlists page
+  const handlePlaylistSelect = useCallback((playlistName: string) => {
+    setShowPlaylists(false);
+    setSelectedPlaylist(playlistName);
+    resetOtherPages(['playlist']);
+  }, [resetOtherPages]);
 
   // Add event listener for custom navigation event
   useEffect(() => {
@@ -392,7 +410,7 @@ export default function Home() {
       </div>
       <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
         {songs.slice(0, 12).map((song) => (
-          <div key={song.id} className="flex-shrink-0 w-[170px]" onClick={() => handleSongClick(song.id - 1)}>
+          <div key={song.id} className="flex-shrink-0 w-[140px] sm:w-[170px]" onClick={() => handleSongClick(song.id - 1)}>
             <div className="rounded-xl overflow-hidden bg-gray-50 p-3 shadow-sm hover:shadow-md transition-all cursor-pointer hover-card-animation">
               <div className="w-full aspect-square rounded-lg overflow-hidden mb-3">
                 <Image
@@ -459,7 +477,7 @@ export default function Home() {
           {recentlyPlayed.map((songIndex) => {
             const song = songs[songIndex];
             return (
-              <div key={`recent-${song.id}`} className="flex-shrink-0 w-[170px]" onClick={() => handleSongClick(songIndex)}>
+              <div key={`recent-${song.id}`} className="flex-shrink-0 w-[140px] sm:w-[170px]" onClick={() => handleSongClick(songIndex)}>
                 <div className="rounded-xl overflow-hidden bg-gray-50 p-3 shadow-sm hover:shadow-md transition-all cursor-pointer hover-card-animation">
                   <div className="w-full aspect-square rounded-lg overflow-hidden mb-3">
                     <Image
@@ -570,57 +588,45 @@ export default function Home() {
               </svg>
             }
             label="Playlists"
-            onClick={(e) => {
-              e.preventDefault();
-              toggleDropdown('playlists');
-            }}
+            onClick={handlePlaylistsClick}
             isDropdown
-            isActive={openDropdown === 'playlists'}
-            delay={100}
+            isActive={showPlaylists}
+            delay={150}
             isSidebarOpen={isSidebarVisible}
           >
             <div className="ml-7 space-y-1 overflow-hidden">
-              <a
+              <a 
                 href="#"
-                className="flex items-center px-2.5 py-1.5 text-sm rounded-lg hover:bg-white/10 transition-colors"
-                onClick={(e) => {
+                className="flex items-center px-2.5 py-2 rounded-xl hover:bg-white/10 transition-colors text-left min-w-0"
+                onClick={(e: React.MouseEvent) => {
                   e.preventDefault();
                   handlePlaylistClick("Top Hits 2024");
-                  if (window.innerWidth < 640) { // sm breakpoint in Tailwind
-                    setIsSidebarVisible(false);
-                  }
                 }}
               >
                 <div className="w-6 h-6 rounded-md bg-gradient-to-br from-purple-400 to-pink-500 flex-shrink-0 mr-2"></div>
-                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || openDropdown === 'playlists' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Top Hits 2024</span>
+                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || showPlaylists ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Top Hits 2024</span>
               </a>
               <a
                 href="#"
-                className="flex items-center px-2.5 py-1.5 text-sm rounded-lg hover:bg-white/10 transition-colors"
-                onClick={(e) => {
+                className="flex items-center px-2.5 py-2 rounded-xl hover:bg-white/10 transition-colors text-left min-w-0"
+                onClick={(e: React.MouseEvent) => {
                   e.preventDefault();
                   handlePlaylistClick("Chill Vibes");
-                  if (window.innerWidth < 640) { // sm breakpoint in Tailwind
-                    setIsSidebarVisible(false);
-                  }
                 }}
               >
                 <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-400 to-teal-500 flex-shrink-0 mr-2"></div>
-                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || openDropdown === 'playlists' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Chill Vibes</span>
+                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || showPlaylists ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Chill Vibes</span>
               </a>
               <a
                 href="#"
-                className="flex items-center px-2.5 py-1.5 text-sm rounded-lg hover:bg-white/10 transition-colors"
-                onClick={(e) => {
+                className="flex items-center px-2.5 py-2 rounded-xl hover:bg-white/10 transition-colors text-left min-w-0"
+                onClick={(e: React.MouseEvent) => {
                   e.preventDefault();
                   handlePlaylistClick("Party Mix");
-                  if (window.innerWidth < 640) { // sm breakpoint in Tailwind
-                    setIsSidebarVisible(false);
-                  }
                 }}
               >
                 <div className="w-6 h-6 rounded-md bg-gradient-to-br from-amber-400 to-red-500 flex-shrink-0 mr-2"></div>
-                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || openDropdown === 'playlists' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Party Mix</span>
+                <span className={`transition-opacity duration-300 text-gray-200 ${isSidebarVisible || showPlaylists ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>Party Mix</span>
               </a>
             </div>
           </NavItem>
@@ -664,7 +670,7 @@ export default function Home() {
           <NavItem
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
               </svg>
             }
             label="Albums"
@@ -918,22 +924,16 @@ export default function Home() {
         <div className="flex-1 flex flex-col mx-1 sm:mx-3 md:mx-6 mb-1 sm:mb-3 md:mb-6 bg-white rounded-xl sm:rounded-2xl shadow-md overflow-hidden border border-gray-100">
           {/* Main content area - conditionally render various pages */}
           {selectedGenre ? (
-            <GenrePage
-              genreName={selectedGenre}
-              onClose={handleCloseGenrePage}
-              onSongSelect={handleSongSelect}
-            />
+            <GenrePage genreName={selectedGenre} onClose={handleCloseGenrePage} onSongSelect={handleSongSelect} />
           ) : selectedPlaylist ? (
-            <PlaylistPage
-              playlistName={selectedPlaylist}
-              onClose={handleClosePlaylistPage}
+            <PlaylistPage 
+              playlistName={selectedPlaylist} 
+              onClose={handleClosePlaylistPage} 
               onSongSelect={handleSongSelect}
+              currentSongIndex={currentSongIndex} 
             />
           ) : showLikedSongs ? (
-            <LikedSongsPage
-              onClose={handleCloseLikedSongsPage}
-              onSongSelect={handleSongSelect}
-            />
+            <LikedSongsPage onClose={handleCloseLikedSongsPage} onSongSelect={handleSongSelect} />
           ) : showSaves ? (
             <SavesPage
               onClose={handleCloseSavesPage}
@@ -958,6 +958,11 @@ export default function Home() {
             <ArtistsPage
               onClose={handleCloseArtistsPage}
               onSongSelect={handleSongSelect}
+            />
+          ) : showPlaylists ? (
+            <PlaylistsPage
+              onClose={handleClosePlaylistsPage}
+              onPlaylistSelect={handlePlaylistSelect}
             />
           ) : (
             <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
@@ -1007,7 +1012,7 @@ export default function Home() {
                   </div>
                   <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Top Hits 2024");
@@ -1018,7 +1023,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">The hottest tracks right now</p>
                     </div>
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Chill Vibes");
@@ -1029,7 +1034,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">Relax and unwind</p>
                     </div>
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Workout Mix");
@@ -1040,7 +1045,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">Energy boost for your session</p>
                     </div>
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Indie Discoveries");
@@ -1051,7 +1056,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">Fresh indie gems</p>
                     </div>
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Throwback Classics");
@@ -1062,7 +1067,7 @@ export default function Home() {
                       <p className="text-xs text-gray-600 truncate">Hits from the past</p>
                     </div>
                     <div
-                      className="flex-shrink-0 w-[170px] sm:w-[200px] bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                      className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[200px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePlaylistClick("Focus Flow");
@@ -1217,7 +1222,7 @@ export default function Home() {
                         {songs.slice(8, 20).map((song) => (
                           <div
                             key={song.id}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1267,7 +1272,7 @@ export default function Home() {
                           </button>
                         </div>
                       </div>
-                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-3 sm:gap-5 scroll-container">
+                      <div className="flex overflow-x-auto pb-2 scrollbar-hide gap-2 sm:gap-3 md:gap-5 scroll-container">
                         {[
                           { name: "Pop", color: "bg-gradient-to-br from-pink-400 to-red-500", songs: songs.filter(s => ["Katy Perry", "Taylor Swift", "Lady Gaga & Bruno Mars", "Harry Styles"].includes(s.artist)) },
                           { name: "Rock", color: "bg-gradient-to-br from-red-400 to-amber-500", songs: songs.filter(s => ["Bastille", "KALEO", "OneRepublic"].includes(s.artist)) },
@@ -1278,16 +1283,16 @@ export default function Home() {
                         ].map((genre, index) => (
                           <div
                             key={index}
-                            className="flex-shrink-0 w-[200px] sm:w-[220px] bg-gray-50 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative h-24 sm:h-36 group"
+                            className="flex-shrink-0 w-[150px] sm:w-[180px] md:w-[220px] bg-gray-50 rounded-xl sm:rounded-2xl p-2 sm:p-3 md:p-5 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative h-20 sm:h-24 md:h-36 group"
                             onClick={(e) => {
                               e.preventDefault();
                               handleGenreClick(genre.name);
                             }}
                           >
                             <div className={`absolute inset-0 ${genre.color} opacity-30 group-hover:opacity-50 transition-opacity duration-300`}></div>
-                            <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-5">
-                              <h3 className="text-base sm:text-lg font-bold text-gray-800">{genre.name}</h3>
-                              <p className="text-xs sm:text-sm text-gray-600">{genre.songs.length} songs</p>
+                            <div className="absolute bottom-2 sm:bottom-3 md:bottom-5 left-2 sm:left-3 md:left-5">
+                              <h3 className="text-sm sm:text-base md:text-lg font-bold text-gray-800">{genre.name}</h3>
+                              <p className="text-xs text-gray-600">{genre.songs.length} songs</p>
                             </div>
                           </div>
                         ))}
@@ -1335,7 +1340,7 @@ export default function Home() {
                         {songs.slice(20, 32).map((song) => (
                           <div
                             key={song.id}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1389,7 +1394,7 @@ export default function Home() {
                         {songs.slice(12, 24).map((song) => (
                           <div
                             key={`daily-${song.id}`}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1443,7 +1448,7 @@ export default function Home() {
                         {songs.slice(5, 17).map((song) => (
                           <div
                             key={`trending-${song.id}`}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1500,7 +1505,7 @@ export default function Home() {
                         {songs.slice(14, 26).map((song) => (
                           <div
                             key={`suggest-${song.id}`}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">
@@ -1554,7 +1559,7 @@ export default function Home() {
                         {songs.slice(18, 30).map((song) => (
                           <div
                             key={`recent-suggest-${song.id}`}
-                            className="flex-shrink-0 w-[160px] sm:w-[180px] bg-gray-50 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
+                            className="flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] bg-gray-50 p-2 sm:p-3 md:p-4 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover-card-animation"
                             onClick={() => handleSongClick(song.id - 1)}
                           >
                             <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 sm:mb-3 shadow-sm">

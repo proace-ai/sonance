@@ -13,7 +13,7 @@ interface MusicCardProps {
 export default function MusicCard({ title, artist, onClick }: MusicCardProps) {
   return (
     <motion.div 
-      className="flex-shrink-0 w-36 cursor-pointer"
+      className="flex-shrink-0 w-32 sm:w-36 cursor-pointer"
       onClick={onClick}
       variants={cardVariants}
       initial="hidden"
@@ -39,7 +39,7 @@ export default function MusicCard({ title, artist, onClick }: MusicCardProps) {
         <div className="pt-[75%]"></div>
       </motion.div>
       <motion.h3 
-        className="font-medium text-sm truncate text-gray-800"
+        className="font-medium text-xs sm:text-sm truncate text-gray-800"
         transition={{ delay: 0.05 }}
       >{title}</motion.h3>
       <motion.p 
